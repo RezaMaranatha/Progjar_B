@@ -14,7 +14,7 @@ sock.listen(1)
 while True:
     print("Waiting for Connection")
     connection, client_address = sock.accept()
-    print("Connection from" ,client_address)
+    print("Connection from: " ,client_address)
     while True:
         data = connection.recv(1024).decode()
         print("received" , data)
@@ -25,4 +25,4 @@ while True:
             print("no more data from" ,client_address)
             break
     connection.close()
-    print ("client disconnected")
+    print ("Client Disconnected")

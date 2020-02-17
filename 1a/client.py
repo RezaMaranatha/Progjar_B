@@ -17,7 +17,7 @@ sock.connect(server_address)
 try:
     # Send data
     message = 'JARINGAN TEKNIK INFORPEMROGRAMAN MATIKA'
-    print("Sending" ,message)
+    print("Sending: " ,message)
     sock.send(message.encode())
     # Look for the response
     amount_received = 0
@@ -25,7 +25,7 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(1024).decode()
         amount_received += len(data)
-        print("Received :" ,data)
+        print("Received: " ,data)
 finally:
     print("Closing Connection")
     sock.close()
