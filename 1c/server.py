@@ -15,13 +15,13 @@ while True:
     print("Waiting for Connection")
     connection, client_address = sock.accept()
     print("Connection from: " ,client_address)
-    while True:
-        data = connection.recv(1024)
-        temp = open("res" + ".txt", "a+b")     
-        if not data:
-            temp.close()
-            break
-        temp.write(data)
-        
+    data = connection.recv(1024).decode()
+    print("Received File Request From Client")
+    temp = open(data, "rb")
+    file = temp.read(1024)    
+    print ('Sending data to Server')
+    connection.send(file)
+    temp.close()  
+
     connection.close()
     print ("Client Disconnected")
