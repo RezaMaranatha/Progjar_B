@@ -11,7 +11,7 @@ port_num = int(input("Input Server Port Number: "))
 # host_ip = socket.gethostbyname(host_name)
 
 server_address = (host_ip, port_num)
-print("Connecting to Server: ", host_ip , " Port: ", port_num)
+print("Connecting to Server:", host_ip , " Port:", port_num)
 sock.connect(server_address)
 
 try:
