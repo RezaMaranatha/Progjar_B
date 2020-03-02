@@ -20,6 +20,7 @@ while True:
         if not data:
             temp.close()
             break
+        print("Data Sent from Client")
         temp.write(data)
         
     connection.close()

@@ -1,7 +1,7 @@
 import socket
 import time
 
-TARGET_IP = "10.151.254.92"
+TARGET_IP = "192.168.0.13"
 TARGET_PORT = 5005
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
