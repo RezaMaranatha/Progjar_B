@@ -27,7 +27,8 @@ c. Mengambil File
    Untuk mengambil file berdasarkan nama file dari folder 'drive'
    Request : get
    Parameter : namafile yang ingin diambil
-   Response: file ter download pada folder tempat script berada
+   Response: jika berhasil -> "File Retrieved"
+             jika gagal -> "ERROR"
 
 d. Jika command tidak dikenali akan merespon dengan ERRCMD
 
@@ -44,7 +45,9 @@ class Machine:
                 print("add")
                 filename = cstring[1].strip()
                 file = cstring[2].strip()
-                # print(file)
+                for i in range(3, len(cstring)):
+                    file = file + ' ' + cstring[i].strip()
+                print(file)
                 print("Adding",filename)
                 # print()
                 p.add_file(filename,file.encode())
