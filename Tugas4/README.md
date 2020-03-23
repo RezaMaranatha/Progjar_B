@@ -11,20 +11,20 @@
 ## Meletakkan File 
 ![4c](images/addFileResponse.png)
 
-Sebelum melakukan request  
+Sebelum melakukan request(add tes2.txt)  
 ![4c1](images/addFileBefore.png)
 
-Setelah melakukan request  
+Setelah melakukan request(add tes2.txt)  
 ![4c2](images/addFileAfter.png)
 
 
 ## Mengambil File 
 ![4d](images/getFileResponse.png)
 
-Sebelum melakukan request  
+Sebelum melakukan request(get tes.txt)  
 ![4d1](images/getFileResponse.png)
 
-Setelah melakukan request  
+Setelah melakukan request(get tes.txt)  
 ![4d2](images/getFileResponse.png)
 
 
