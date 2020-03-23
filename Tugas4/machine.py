@@ -1,63 +1,70 @@
-from person import Person
+from handler import Handle
 import json
 import logging
 
 '''
-PROTOCOL FORMAT
+------ PROTOCOL FORMAT ------
 
-string terbagi menjadi 2 bagian, dipisahkan oleh spasi
-COMMAND spasi PARAMETER spasi PARAMETER ...
+string terbagi menjadi 2 bagian yang dipisahkan oleh spasi
+Format : command *spasi* parameter *spasi* parameter
 
-FITUR
+------ FITUR ------
 
-- create : untuk membuat record
-  request : create
-  parameter : nama spasi notelpon
-  response : berhasil -> ok
-             gagal -> error
+a. Meletakkan File
+   Untuk meletakkan file ke dalam folder "drive"
+   Request : add
+   Parameter : namafile *spasi* isi dari file
+   Response : jika berhasil -> "File Added
+              jika gagal -> "ERROR"
 
-- delete : untuk menghapus record
-  request: delete
-  parameter : id
-  response: berhasil -> OK
-            gagal -> ERROR
+b. List File
+   Untuk melihat list file di dalam folder 'drive'
+   Request : list
+   Parameter: -
+   Response: list file yang ada dalam folder 'drive'
 
-- list : untuk melihat daftar record
-  request: list
-  parameter: tidak ada
-  response: daftar record person yang ada
+c. Mengambil File
+   Untuk mengambil file berdasarkan nama file dari folder 'drive'
+   Request : get
+   Parameter : namafile yang ingin diambil
+   Response: file ter download pada folder tempat script berada
 
-- get : untuk mencari record berdasar nama
-  request: get 
-  parameter: nama yang dicari
-  response: record yang dicari dalam bentuk json format
-
-- jika command tidak dikenali akan merespon dengan ERRCMD
+d. Jika command tidak dikenali akan merespon dengan ERRCMD
 
 '''
-p = Person()
+p = Handle()
 
-class PersonMachine:
+class Machine:
     def proses(self,string_to_process):
         s = string_to_process
         cstring = s.split(" ")
         try:
             command = cstring[0].strip()
-            if (command=='create'):
-                logging.warning("create")
-                nama = cstring[1].strip()
-                notelpon = cstring[2].strip()
-                p.create_data(nama,notelpon)
-                return "OK"
-            elif (command=='list'):
-                logging.warning("list")
-                hasil = p.list_data()
-                return json.dumps(hasil)
+            if (command=='add'):
+                print("add")
+                filename = cstring[1].strip()
+                file = cstring[2].strip()
+                # print(file)
+                print("Adding",filename)
+                # print()
+                p.add_file(filename,file.encode())
+                return "File Added"
+
             elif (command=='get'):
-                logging.warning("list")
-                nama = cstring[1].strip()
-                hasil = p.get_data(nama)
-                return json.dumps(hasil)
+                print("get")
+                filename = cstring[1].strip()
+                print("Retrieving", filename)
+                hasil = p.get_file(filename)
+                return hasil
+
+            elif (command=='list'):
+                logging.info("list")
+                data = {}
+                data['files'] = []
+                hasil = p.list_file()
+                for filename in hasil:
+                    data['files'].append({"filename":filename})
+                return json.dumps(data, indent=4)
             else:
                 return "ERRCMD"
         except:
@@ -65,8 +72,4 @@ class PersonMachine:
 
 
 if __name__=='__main__':
-    pm = PersonMachine()
-    # hasil = pm.proses("list")
-    # print(hasil)
-    hasil = pm.proses("get vanbasten")
-    print(hasil)
+    machine = Machine()

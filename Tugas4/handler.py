@@ -1,37 +1,34 @@
 import shelve
 import uuid
+import socket
+import os
+import base64
 
-
-class Person:
+class Handle:
     def __init__(self):
-        self.data = shelve.open('mydata.dat')
-    def create_data(self,nama=None,telpon=None):
-        if (nama is None):
-            return False
-        id=str(uuid.uuid4())
-        data = dict(id=id,nama=nama,telpon=telpon)
-        self.data[id]=data
+        if not os.path.exists("drive"):
+            os.makedirs("drive")
+    def add_file(self,filename=None,file=None):
+        # file = file.encode()
+        data_file = file
+        f = open("drive/"+filename,"wb")
+        f.write(data_file)
         return True
-    def get_data(self,nama=None):
-        for i in self.data.keys():
-            try:
-                if (self.data[i]['nama'].lower() ==nama.lower()):
-                    return self.data[i]
-            except:
-                return False
-    def delete_data(self,id=None):
-        if (id is None):
-            return False
-        del self.data[id]
-    def list_data(self):
-        k = [self.data[i] for i in self.data.keys()]
-        return k
+
+    def get_file(self,filename=None):
+        temp = []
+        f = open("drive/" +filename, "rb")
+        hasil = f.read()
+        f.close()
+        hasil = str(hasil, "utf-8")
+        return hasil
+
+    def list_file(self):
+        file_list = os.listdir("drive")
+        return file_list
 
 if __name__=='__main__':
-    p = Person()
-    p.create_data("vanBasten","621234")
-    p.create_data("vanPersie","621235")
-    p.create_data("vanNistelroy","621236")
-    p.create_data("vanDerVaart","621237")
-    print(p.list_data())
-    # print(p.get_data('vanbasten'))
+    p = Handle()
+    print(p.list_file())
+
+

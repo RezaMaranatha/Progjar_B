@@ -5,9 +5,9 @@ import logging
 import time
 import sys
 
-from person_machine import PersonMachine
+from machine import Machine
 
-pm = PersonMachine()
+pm = Machine()
 
 class ProcessTheClient(threading.Thread):
     def __init__(self, connection, address):
@@ -17,11 +17,10 @@ class ProcessTheClient(threading.Thread):
 
     def run(self):
         while True:
-            data = self.connection.recv(32)
+            data = self.connection.recv(2048)
             if data:
                 d = data.decode()
                 hasil = pm.proses(d)
-                hasil=hasil+"\r\n"
                 self.connection.sendall(hasil.encode())
             else:
                 break
@@ -35,7 +34,7 @@ class Server(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self.my_socket.bind(('0.0.0.0', 8889))
+        self.my_socket.bind(('0.0.0.0', 8888))
         self.my_socket.listen(1)
         while True:
             self.connection, self.client_address = self.my_socket.accept()
@@ -49,7 +48,6 @@ class Server(threading.Thread):
 def main():
     svr = Server()
     svr.start()
-
 
 if __name__ == "__main__":
     main()
