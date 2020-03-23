@@ -3,12 +3,12 @@ import json
 import logging
 
 '''
------- PROTOCOL FORMAT ------
+        PROTOCOL FORMAT
 
 string terbagi menjadi 2 bagian yang dipisahkan oleh spasi
 Format : command *spasi* parameter *spasi* parameter
 
------- FITUR ------
+        FITUR
 
 a. Meletakkan File
    Untuk meletakkan file ke dalam folder "drive"
