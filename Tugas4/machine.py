@@ -14,7 +14,7 @@ a. Meletakkan File
    Untuk meletakkan file ke dalam folder "drive"
    Request : add
    Parameter : namafile *spasi* isi dari file
-   Response : jika berhasil -> "File Added
+   Response : jika berhasil -> "File Added"
               jika gagal -> "ERROR"
 
 b. List File
