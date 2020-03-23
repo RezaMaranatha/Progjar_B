@@ -22,10 +22,10 @@ Setelah melakukan request (add tes2.txt)
 ![4d](images/getFileResponse.png)
 
 Sebelum melakukan request (get tes.txt)  
-![4d1](images/getFileResponse.png)
+![4d1](images/getFileBefore.png)
 
 Setelah melakukan request (get tes.txt)  
-![4d2](images/getFileResponse.png)
+![4d2](images/getFileAfter.png)
 
 
 ## Melihat List File
