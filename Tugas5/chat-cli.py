@@ -12,22 +12,26 @@ class ChatClient:
         self.server_address = (TARGET_IP,TARGET_PORT)
         self.sock.connect(self.server_address)
         self.tokenid=""
-    def proses(self,cmdline):
-        j=cmdline.split(" ")
+    def proses(self,data):
+        j=data.split(" ")
         try:
             command=j[0].strip()
-            if (command=='auth'):
+            if (command=='login'):
                 username=j[1].strip()
                 password=j[2].strip()
                 return self.login(username,password)
             elif (command=='send'):
                 usernameto = j[1].strip()
                 message=""
-                for w in j[2:]:
-                   message="{} {}" . format(message,w)
+                for i in range(2, len(j)):
+                    message = message + ' ' + j[i].strip()
                 return self.sendmessage(usernameto,message)
-            elif (command=='inbox'):
+            elif (command=='1'):
                 return self.inbox()
+            elif (command=='2'):
+                return self.showUser()
+            elif (command=='logout'):
+                return self.logout()
             else:
                 return "*Maaf, command tidak benar"
         except IndexError:
@@ -38,48 +42,70 @@ class ChatClient:
             receivemsg = ""
             while True:
                 data = self.sock.recv(64)
-                print("diterima dari server",data)
+                # print("diterima dari server",data)
                 if (data):
                     receivemsg = "{}{}" . format(receivemsg,data.decode())  #data harus didecode agar dapat di operasikan dalam bentuk string
                     if receivemsg[-4:]=='\r\n\r\n':
-                        print("end of string")
+                        # print("end of string")
                         return json.loads(receivemsg)
         except:
             self.sock.close()
             return { 'status' : 'ERROR', 'message' : 'Gagal'}
     def login(self,username,password):
-        string="auth {} {} \r\n" . format(username,password)
+        string="auth {} {}" . format(username,password)
         result = self.sendstring(string)
         if result['status']=='OK':
             self.tokenid=result['tokenid']
-            return "username {} logged in, token {} " .format(username,self.tokenid)
+            # print(self.tokenid)
+            return "Welcome {}, Token: {}" .format(username, self.tokenid)
         else:
             return "Error, {}" . format(result['message'])
-    def sendmessage(self,usernameto="xxx",message="xxx"):
+
+    def logout(self):
         if (self.tokenid==""):
-            return "Error, not authorized"
-        string="send {} {} {} \r\n" . format(self.tokenid,usernameto,message)
-        print(string)
+            return "User not Logged In"
+        string="logout {}" . format(self.tokenid)
         result = self.sendstring(string)
         if result['status']=='OK':
-            return "message sent to {}" . format(usernameto)
+            self.tokenid=""
+            return "{}" . format(result['message'])
+        else:
+            return "Error, {}" . format(result['message'])
+
+    def sendmessage(self,usernameto,message):
+        if (self.tokenid==""):
+            return "Error, not authorized"
+        string="send {} {} {}" . format(self.tokenid,usernameto,message)
+        print("Sending Message to", usernameto)
+        result = self.sendstring(string)
+        if result['status']=='OK':
+            return "Message sent to {}" . format(usernameto)
         else:
             return "Error, {}" . format(result['message'])
     def inbox(self):
         if (self.tokenid==""):
             return "Error, not authorized"
-        string="inbox {} \r\n" . format(self.tokenid)
+        string="inbox {}" . format(self.tokenid)
         result = self.sendstring(string)
         if result['status']=='OK':
-            return "{}" . format(json.dumps(result['messages']))
+            return "{}" . format(json.dumps(result['messages'], indent=4))
         else:
             return "Error, {}" . format(result['message'])
-
+    
+    def showUser(self):
+        if (self.tokenid==""):
+            return "Error, not authorized"
+        string="showUser {}" . format(self.tokenid)
+        result = self.sendstring(string)
+        if result['status']=='OK':
+            return "{}" . format(json.dumps(result['messages'], indent=4))
+        else:
+            return "Error, {}" . format(result['message'])
 
 
 if __name__=="__main__":
     cc = ChatClient()
     while True:
-        cmdline = input("Command {}:" . format(cc.tokenid))
+        cmdline = input("Enter Command: ")
         print(cc.proses(cmdline))
 

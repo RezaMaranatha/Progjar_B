@@ -25,16 +25,29 @@ class Chat:
 				sessionid = j[1].strip()
 				usernameto = j[2].strip()
 				message=""
-				for w in j[3:]:
-					message="{} {}" . format(message,w)
+				for i in range(3, len(j)):
+    					message = message + ' ' + j[i].strip()
+				# for w in j[3:]:
+				# 	message="{} {}" . format(message,w)
 				usernamefrom = self.sessions[sessionid]['username']
 				logging.warning("SEND: session {} send message from {} to {}" . format(sessionid, usernamefrom,usernameto))
 				return self.send_message(sessionid,usernamefrom,usernameto,message)
 			elif (command=='inbox'):
 				sessionid = j[1].strip()
+				print(sessionid)
 				username = self.sessions[sessionid]['username']
 				logging.warning("INBOX: {}" . format(sessionid))
 				return self.get_inbox(username)
+			elif (command=='showUser'):
+				sessionid = j[1].strip()
+				# print(sessionid)
+				username = self.sessions[sessionid]['username']
+				logging.warning("USERS: {}" . format(sessionid))
+				return self.showUser(username)
+			elif (command=='logout'):
+				sessionid = j[1].strip()
+				logging.warning("USERS: {}" . format(sessionid))
+				return self.logout(sessionid)	
 			else:
 				return {'status': 'ERROR', 'message': '**Protocol Tidak Benar'}
 		except KeyError:
@@ -47,12 +60,19 @@ class Chat:
 		if (self.users[username]['password']!= password):
 			return { 'status': 'ERROR', 'message': 'Password Salah' }
 		tokenid = str(uuid.uuid4()) 
+		print(tokenid)
 		self.sessions[tokenid]={ 'username': username, 'userdetail':self.users[username]}
-		return { 'status': 'OK', 'tokenid': tokenid }
+		return { 'status': 'OK', 'tokenid': tokenid }   
+
+	def logout(self,sessionID):
+		self.sessions[sessionID]={}
+		return { 'status': 'OK', 'message': 'User Logged Out' } 	
+	
 	def get_user(self,username):
 		if (username not in self.users):
 			return False
 		return self.users[username]
+
 	def send_message(self,sessionid,username_from,username_dest,message):
 		if (sessionid not in self.sessions):
 			return {'status': 'ERROR', 'message': 'Session Tidak Ditemukan'}
@@ -62,7 +82,7 @@ class Chat:
 		if (s_fr==False or s_to==False):
 			return {'status': 'ERROR', 'message': 'User Tidak Ditemukan'}
 
-		message = { 'msg_from': s_fr['nama'], 'msg_to': s_to['nama'], 'msg': message }
+		message = { 'msg_from': s_fr['nama'], 'msg': message }
 		outqueue_sender = s_fr['outgoing']
 		inqueue_receiver = s_to['incoming']
 		try:	
@@ -80,14 +100,25 @@ class Chat:
 	def get_inbox(self,username):
 		s_fr = self.get_user(username)
 		incoming = s_fr['incoming']
-		msgs={}
+		data={}
+		data['Inbox'] = []
 		for users in incoming:
-			msgs[users]=[]
 			while not incoming[users].empty():
-				msgs[users].append(s_fr['incoming'][users].get_nowait())
-			
-		return {'status': 'OK', 'messages': msgs}
+				data['Inbox'].append(s_fr['incoming'][users].get_nowait())
 
+		return {'status': 'OK', 'messages': data}
+
+	def showUser(self, username):
+		s_fr = self.get_user(username)
+		namae= s_fr['negara']
+		print(namae)
+		data = {}
+		data['users'] = []
+		for users in self.users:
+    			if users != username:
+    				data['users'].append({"username":users})
+
+		return {'status': 'OK', 'messages': data}
 
 if __name__=="__main__":
 	j = Chat()

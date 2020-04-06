@@ -18,18 +18,18 @@ class ProcessTheClient(threading.Thread):
 	def run(self):
 		rcv=""
 		while True:
-			data = self.connection.recv(32)
+			data = self.connection.recv(2048)
 			if data:
 				d = data.decode()
 				rcv=rcv+d
-				if rcv[-2:]=='\r\n':
+				# if rcv[-1:]=='.':
 					#end of command, proses string
-					logging.warning("data dari client: {}" . format(rcv))
-					hasil = json.dumps(chatserver.proses(rcv))
-					hasil=hasil+"\r\n\r\n"
-					logging.warning("balas ke  client: {}" . format(hasil))
-					self.connection.sendall(hasil.encode())
-					rcv=""
+				logging.warning("data dari client: {}" . format(rcv))
+				hasil = json.dumps(chatserver.proses(rcv))
+				hasil=hasil+"\r\n\r\n"
+				logging.warning("balas ke  client: {}" . format(hasil))
+				self.connection.sendall(hasil.encode())
+				rcv=""
 			else:
 				break
 		self.connection.close()
