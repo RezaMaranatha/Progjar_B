@@ -65,7 +65,8 @@ class Chat:
 		return { 'status': 'OK', 'tokenid': tokenid }   
 
 	def logout(self,sessionID):
-		self.sessions[sessionID]={}
+		self.sessions.pop(sessionID)
+		print(list(self.sessions.keys()))
 		return { 'status': 'OK', 'message': 'User Logged Out' } 	
 	
 	def get_user(self,username):
@@ -109,16 +110,13 @@ class Chat:
 		return {'status': 'OK', 'messages': data}
 
 	def showUser(self, username):
-		s_fr = self.get_user(username)
-		namae= s_fr['negara']
-		print(namae)
 		data = {}
 		data['users'] = []
-		for users in self.users:
-    			if users != username:
-    				data['users'].append({"username":users})
+		for users in self.sessions.keys():
+				data['users'].append({"username":self.sessions[users]['username']})
 
 		return {'status': 'OK', 'messages': data}
+	
 
 if __name__=="__main__":
 	j = Chat()
