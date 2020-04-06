@@ -26,9 +26,9 @@ class ChatClient:
                 for i in range(2, len(j)):
                     message = message + ' ' + j[i].strip()
                 return self.sendmessage(usernameto,message)
-            elif (command=='1'):
+            elif (command=='inbox'):
                 return self.inbox()
-            elif (command=='2'):
+            elif (command=='show'):
                 return self.showUser()
             elif (command=='logout'):
                 return self.logout()
@@ -76,7 +76,7 @@ class ChatClient:
         if (self.tokenid==""):
             return "Error, not authorized"
         string="send {} {} {}" . format(self.tokenid,usernameto,message)
-        print("Sending Message to", usernameto)
+        # print("Sending Message to", usernameto)
         result = self.sendstring(string)
         if result['status']=='OK':
             return "Message sent to {}" . format(usernameto)
