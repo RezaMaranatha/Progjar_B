@@ -14,3 +14,6 @@
 
 ## Balasan dari server
 ![chrome1](images/responseChrome.png)
+
+## Tab network pada browser Chrome
+![network](images/network.png)
