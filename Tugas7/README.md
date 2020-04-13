@@ -10,4 +10,4 @@
 ![task3](images/task3.png)
 
 ## Tabulasi hasil stress test 
-![table](images/table.png)
+![table](images/stressTable.png)
