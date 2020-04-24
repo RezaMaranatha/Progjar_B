@@ -2,8 +2,12 @@
 
 ## Test localhost:10002/sending.html
 
-![r10c1](images/sending.png)
+![1](images/sending.png)
+
+## Test input form
+
+![2](images/sendingTest.png)
 
 ## Test submit form
 
-![r10c1](images/sendingResult.png)
+![3](images/sendingResult.png)
