@@ -60,20 +60,20 @@
 
 ### Concurrency 10
 
-![t3](images/T0.png)
+![t3](images/T10.png)
 
 ### Concurrency 20
 
-![t4](images/T0.png)
+![t4](images/T20.png)
 
 ### Concurrency 30
 
-![t5](images/T0.png)
+![t5](images/T30.png)
 
 ### Concurrency 50
 
-![t6](images/T0.png)
+![t6](images/T50.png)
 
 ### Concurrency 100
 
-![t7](images/T00.png)
+![t7](images/T100.png)
