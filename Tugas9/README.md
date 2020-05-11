@@ -40,10 +40,6 @@
 
 ![a100](images/asyncC100.png)
 
-### Concurrency 200
-
-![a200](images/asyncC200.png)
-
 ## Hasil Stress Test Apache-Benchmark Threaded Server 1000 Request
 
 ### Concurrency 1
@@ -73,7 +69,3 @@
 ### Concurrency 100
 
 ![t100](images/threadC100.png)
-
-### Concurrency 200
-
-![t200](images/threadC200.png)
