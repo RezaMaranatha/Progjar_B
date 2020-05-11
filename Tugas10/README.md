@@ -2,19 +2,23 @@
 
 ## Tabel Stress Test Load Balancer vs Asynchronous vs Threaded Server
 
-### Load Balancer
+### Async Server dengan Load Balancer
 
 ![l0](images/LB.png)
 
-### Async
+### Thread Server dengan Load Balancer
+
+![l0](images/TLB.png)
+
+### Async Server tanpa Load Balancer
 
 ![a0](images/async.png)
 
-### Thread
+### Thread Server tanpa Load Balancer
 
 ![t0](images/thread.png)
 
-## Hasil Stress Test Apache-Benchmark Server dengan Load Balancer 1000 Request
+## Hasil Stress Test Apache-Benchmark Async Server dengan Load Balancer 1000 Request
 
 ### Concurrency 1
 
@@ -43,3 +47,33 @@
 ### Concurrency 100
 
 ![l7](images/C100.png)
+
+## Hasil Stress Test Apache-Benchmark Thread Server dengan Load Balancer 1000 Request
+
+### Concurrency 1
+
+![t1](images/T1.png)
+
+### Concurrency 5
+
+![t2](images/T5.png)
+
+### Concurrency 10
+
+![t3](images/CT0.png)
+
+### Concurrency 20
+
+![t4](images/CT0.png)
+
+### Concurrency 30
+
+![t5](images/CT0.png)
+
+### Concurrency 50
+
+![t6](images/CT0.png)
+
+### Concurrency 100
+
+![t7](images/CT00.png)
