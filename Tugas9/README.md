@@ -2,6 +2,14 @@
 
 ## Tabel Stress Test Asynchronous & Threaded Server
 
+### Async
+
+![a0](images/async.png)
+
+### Thread
+
+![t0](images/thread.png)
+
 ## Hasil Stress Test Apache-Benchmark Asynchronous Server 1000 Request
 
 ### Concurrency 1
