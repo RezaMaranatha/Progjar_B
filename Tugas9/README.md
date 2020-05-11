@@ -1,8 +1,8 @@
 # Tugas 9
 
-## Tabel Stress Test Async & Thread Server
+## Tabel Stress Test Asynchronous & Threaded Server
 
-## Hasil stress test apache-benchmark Asynchronous Server 1000 Request
+## Hasil Stress Test Apache-Benchmark Asynchronous Server 1000 Request
 
 ### Concurrency 1
 
@@ -36,7 +36,7 @@
 
 ![a200](images/asyncC200.png)
 
-## Hasil stress test apache-benchmark Threaded Server 1000 Request
+## Hasil Stress Test Apache-Benchmark Threaded Server 1000 Request
 
 ### Concurrency 1
 
