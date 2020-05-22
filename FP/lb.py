@@ -71,13 +71,13 @@ class Server(asyncore.dispatcher):
 			logging.warning("connection from {}" . format(repr(addr)))
 			count +=1
 			if(len(self.bservers.servers)<=3):
-				if(count == 10):
+				if(count == 100):
 					count = 0
 					self.bservers.addserver()
 
 			bs = self.bservers.getserver()
 			logging.warning("koneksi dari {} diteruskan ke {}" . format(addr, bs))
-			print(portnum)
+			# print(portnum)
 			backend = Backend(bs)
 
 			#mendapatkan handler dan socket dari client
@@ -86,7 +86,7 @@ class Server(asyncore.dispatcher):
 
 
 def main():
-	portnumber=44444
+	portnumber=44445
 	try:
 		portnumber=int(sys.argv[1])
 	except:
