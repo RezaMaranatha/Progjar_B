@@ -3,15 +3,14 @@ import time
 import sys
 import asyncore
 import logging
-
+import subprocess
+count = 0 
+portnum = 9000
 
 class BackendList:
 	def __init__(self):
 		self.servers=[]
-		self.servers.append(('127.0.0.1',9006))
-		self.servers.append(('127.0.0.1',9007))
-		self.servers.append(('127.0.0.1',9008))
-		self.servers.append(('127.0.0.1',9009))
+		self.servers.append(('127.0.0.1',9000))
 		self.current=0
 	def getserver(self):
 		s = self.servers[self.current]
@@ -19,7 +18,11 @@ class BackendList:
 		if (self.current>=len(self.servers)):
 			self.current=0
 		return s
-
+		
+	def addserver(self):		
+		global portnum
+		portnum += 1
+		self.servers.append(('127.0.0.1',portnum))
 
 class Backend(asyncore.dispatcher_with_send):
 	def __init__(self,targetaddress):
@@ -62,13 +65,19 @@ class Server(asyncore.dispatcher):
 
 	def handle_accept(self):
 		pair = self.accept()
+		global count
 		if pair is not None:
 			sock, addr = pair
 			logging.warning("connection from {}" . format(repr(addr)))
+			count +=1
+			if(len(self.bservers.servers)<=3):
+				if(count == 10):
+					count = 0
+					self.bservers.addserver()
 
-			#menentukan ke server mana request akan diteruskan
 			bs = self.bservers.getserver()
 			logging.warning("koneksi dari {} diteruskan ke {}" . format(addr, bs))
+			print(portnum)
 			backend = Backend(bs)
 
 			#mendapatkan handler dan socket dari client
