@@ -86,7 +86,7 @@ class Server(asyncore.dispatcher):
 
 
 def main():
-	portnumber=44445
+	portnumber=44444
 	try:
 		portnumber=int(sys.argv[1])
 	except:
